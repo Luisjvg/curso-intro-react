@@ -6,16 +6,37 @@ import { TodoItem } from './components/TodoItem/TodoItem'
 import { CreateTodoButton } from './components/CreateTodoButton/CreateTodoButton'
 // import './App.css';
 
-const defaultTodos = [
-  { text: 'Cortar cebolla', completed: false},
-  { text: 'Tomas el curso de intro a React', complete: false},
-  { text: 'Llorar con la llorona', completed: false},
-  { text: 'LALALALALA', completed: false},
-]
+function useLocalStorage(itemName, initialValue){
+  const localStorageItem = localStorage.getItem(itemName)
+  let parsedItem;
+
+  if(!localStorageItem){
+    localStorage.setItem('itemName', JSON.stringify(initialValue));
+    parsedItem = initialValue;
+  } else{
+    parsedItem = JSON.parse(localStorageItem);
+  }
+  
+  const [item, setItem] = React.useState(parsedItem)
+  
+  const saveItem = (newItem) => {
+    const stringifiedItem = JSON.stringify(newItem)
+    localStorage.setItem(itemName, stringifiedItem);
+    setItem(newItem);
+  }
+
+  return [
+    item,
+    saveItem,
+  ];
+}
 
 
 function App() {
-  const [todos, setTodos] = React.useState(defaultTodos)
+
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1', [])
+
+  
   const [search, setSearch] = React.useState('')
   
   const completedTodos = todos.filter(todos => !!todos.completed).length;
@@ -36,19 +57,21 @@ function App() {
     })
   }
 
+  
+
   /*Funcion con parametro (texto), aqui buscaremos en el index de los "todos" si el todo.text es igual a el texto que le pasemos*/
   const completeTodo = (text) => {
     const todoIndex = todos.findIndex(todo => todo.text === text)
-    const newTodos = [...todos];
-    newTodos[todoIndex].completed = true
-    setTodos(newTodos);
+    const newTodo = [...todos];
+    newTodo[todoIndex].completed = true
+    saveTodos(newTodo);
   };
 
   const deleteTodo = (text) => {
     const todoIndex = todos.findIndex(todo => todo.text === text)
     const newTodos = [...todos];
     newTodos.splice(todoIndex, 1);
-    setTodos(newTodos);
+    saveTodos(newTodos);
 
   };
 
@@ -79,3 +102,4 @@ function App() {
 }
 
 export default App;
+
