@@ -1,40 +1,63 @@
 import React from 'react';
-import { TodoCounter } from './components/TodoCounter/TodoCounter';
-import { TodoSearch } from './components/TodoSearch/TodoSearch';
-import { TodoList } from './components/TodoList/TodoList';
-import { TodoItem } from './components/TodoItem/TodoItem'
-import { CreateTodoButton } from './components/CreateTodoButton/CreateTodoButton'
+
 // import './App.css';
 
 function useLocalStorage(itemName, initialValue){
-  const localStorageItem = localStorage.getItem(itemName)
-  let parsedItem;
+  const [loading, setLoading] = React.useState(true)
+  const [item, setItem] = React.useState(initialValue)
+  const [error, setError] = React.useState(false)
 
-  if(!localStorageItem){
-    localStorage.setItem('itemName', JSON.stringify(initialValue));
-    parsedItem = initialValue;
-  } else{
-    parsedItem = JSON.parse(localStorageItem);
-  }
+  React.useEffect(() => {
+    setTimeout(() => {
+      try {
+        const localStorageItem = localStorage.getItem(itemName)
+        let parsedItem;
+      
+        if(!localStorageItem){
+          localStorage.setItem('itemName', JSON.stringify(initialValue));
+          parsedItem = initialValue;
+        } else{
+          parsedItem = JSON.parse(localStorageItem);
+        }
   
-  const [item, setItem] = React.useState(parsedItem)
+        setItem(parsedItem)
+        setLoading(false)
+      } catch(error) {
+        setError(error)
+      } finally{
+        setLoading(false)
+      }
+    }, 1000)
+  });
+  
   
   const saveItem = (newItem) => {
-    const stringifiedItem = JSON.stringify(newItem)
+    try {
+      const stringifiedItem = JSON.stringify(newItem)
     localStorage.setItem(itemName, stringifiedItem);
     setItem(newItem);
+    } catch(error) {
+      setError(error)
+    }
   }
 
-  return [
+  return { 
     item,
     saveItem,
-  ];
+    loading,
+    error
+  };
 }
 
 
 function App() {
 
-  const [todos, saveTodos] = useLocalStorage('TODOS_V1', [])
+  const {
+    item: todos,
+    saveItem: saveTodos,
+    loading,
+    error
+  } = useLocalStorage('TODOS_V1', [])
 
   
   const [search, setSearch] = React.useState('')
@@ -73,30 +96,19 @@ function App() {
     newTodos.splice(todoIndex, 1);
     saveTodos(newTodos);
 
-  };
-
+  }; 
+  
   return (
     <React.Fragment>
-      <TodoCounter
-        total={totalTodos}
-        completed={completedTodos}
-      />
-      <TodoSearch
+      <AppUI 
+        totalTodos={totalTodos}
+        completeTodos={completedTodos}
         search={search}
         setSearch={setSearch}
+        searchedTodos={searchedTodos}
+        completeTodo={completeTodo}
+        deteleTodo={deteleTodo}
       />
-      <TodoList>
-        {searchedTodos.map(todos => (
-          <TodoItem 
-          key={todos.text} 
-          text={todos.text}
-          completed={todos.completed}  
-          onComplete={() => {completeTodo(todos.text)}}
-          onDelete={() => {deleteTodo(todos.text)}}
-          />
-          ))}  
-      </TodoList>
-      <CreateTodoButton/>
     </React.Fragment>
   );
 }
