@@ -1,0 +1,41 @@
+.ModalBackground {
+    height: 50%;
+    width: 80%;
+    background: rgba(32,35,41,.8);
+    position: fixed;
+    top: 30%;
+    left: 10%;
+    right: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+.ModalTodos{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.ModalInput{
+  height: 50%;
+  width: 70%;
+
+}
+.ModalButtons{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 20%;
+  margin-top: 5%;
+}
+.buttonAdd{
+height: 100%;
+  width: 20%;
+}
+.buttonClose{
+height: 100%;
+  width: 20%;
+}
