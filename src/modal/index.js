@@ -4,21 +4,12 @@ import './modal.css'
 
 
 
-export function Modal(props){
+export function Modal({ children }){
 
-    const closeModal = () => {
-        props.setOpenModal(false)
-    }
 
     return ReactDOM.createPortal(
         <div className="ModalBackground">
-            <div className="ModalTodos">
-                <input placeholder='Escribe el Todo que quieras' className="ModalInput"></input>
-                <div className="ModalButtons">
-                    <button className="buttonAdd">Agregar</button>
-                    <button className="buttonClose" onClick={closeModal}>Cerrar</button>
-                </div>
-            </div>
+            {children}
         </div>,
         document.getElementById('modal')
     )

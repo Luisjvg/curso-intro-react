@@ -34,6 +34,15 @@ export function TodoProvider(props){
       }
     
       /*Funcion con parametro (texto), aqui buscaremos en el index de los "todos" si el todo.text es igual a el texto que le pasemos*/
+      const addTodo = (text) => {
+        const newTodo = [...todos];
+        newTodo.push({
+          completed: false,
+          text,
+        })
+        saveTodos(newTodo);
+      };
+      
       const completeTodo = (text) => {
         const todoIndex = todos.findIndex(todo => todo.text === text)
         const newTodo = [...todos];
@@ -58,6 +67,7 @@ export function TodoProvider(props){
             search,
             setSearch,
             searchedTodos,
+            addTodo,
             completeTodo,
             deleteTodo,
             openModal,

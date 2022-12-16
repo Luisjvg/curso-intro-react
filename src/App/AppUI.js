@@ -4,8 +4,13 @@ import { TodoContext } from '../TodoContext';
 import { TodoSearch } from '../components/TodoSearch/TodoSearch';
 import { TodoList } from '../components/TodoList/TodoList';
 import { TodoItem } from '../components/TodoItem/TodoItem'
+import { TodoForm } from "../components/TodoForm";
 import { CreateTodoButton } from '../components/CreateTodoButton/CreateTodoButton' 
 import { Modal } from '../modal'
+import { TodosError } from '../TodosError'
+import { TodosLoading } from '../TodosLoading'
+import { EmptyTodos } from '../EmptyTodos'
+
 
 export function AppUI(){
     const {
@@ -24,9 +29,9 @@ export function AppUI(){
       <TodoSearch/>
 
           <TodoList>
-          {error && <p>Desespérate, hubo un error...</p>}
-          {loading && <p>Estamos cargando, no desesperes...</p>}
-          {(!loading && !searchedTodos.length) && <p>Crea tu primer Todo</p>}
+          {error && <TodosError error={error}/>}
+          {loading && <TodosLoading />}
+          {(!loading && !searchedTodos.length) && <EmptyTodos />}
   
           {searchedTodos.map(todos => (
             <TodoItem 
@@ -40,7 +45,9 @@ export function AppUI(){
         </TodoList>
       
         {openModal && (
-          <Modal setOpenModal={setOpenModal}/>
+          <Modal>
+					  <TodoForm />
+				  </Modal>
         )}
 
       <CreateTodoButton
