@@ -1,0 +1,12 @@
+.checkIcon{
+    font-size: 25px;
+}
+.checkIcon:hover{
+    color: green;
+}
+.deleteIcon{
+    font-size: 25px;
+}
+.deleteIcon:hover{
+    color: red;
+}
