@@ -1,7 +1,6 @@
 import React from "react";
 import { withStorageListener } from "./withStorageListener";
 
-
 export function ChangeAlert ({show, toggleShow}){
     if(show){
         return (
@@ -18,3 +17,4 @@ export function ChangeAlert ({show, toggleShow}){
 }
 
 export const ChangeAlertWithStorageListener = withStorageListener(ChangeAlert);
+

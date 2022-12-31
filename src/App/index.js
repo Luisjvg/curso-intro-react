@@ -28,6 +28,7 @@ export function App(){
     search,
     setSearch,
     addTodo,
+    sincronizeTodos
   } = useTodos();
 
   return(
@@ -52,6 +53,7 @@ export function App(){
       searchedTodos={searchedTodos}
       totalTodos={totalTodos}
       searchText={search}
+      sincronize={sincronizeTodos}
       onError={() => <TodosError/>}
       onLoading={() => <TodosLoading/>}
       onEmptyTodos={() => <EmptyTodos/>}
@@ -90,7 +92,9 @@ export function App(){
       setOpenModal={setOpenModal}
     />
 
-    <ChangeAlertWithStorageListener/>
+    <ChangeAlertWithStorageListener
+      sincronize={sincronizeTodos}
+    />
   </React.Fragment>
   )
 }
