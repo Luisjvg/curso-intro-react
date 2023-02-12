@@ -53,7 +53,6 @@ export function App(){
       searchedTodos={searchedTodos}
       totalTodos={totalTodos}
       searchText={search}
-      sincronize={sincronizeTodos}
       onError={() => <TodosError/>}
       onLoading={() => <TodosLoading/>}
       onEmptyTodos={() => <EmptyTodos/>}

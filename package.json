@@ -41,5 +41,16 @@
   "devDependencies": {
     "gh-pages": "^4.0.0"
   },
-  "homepage": "https://Luisjvg.git.io/curso-intro-react"
+  "homepage": "https://Luisjvg.git.io/curso-intro-react",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luisjvg/curso-intro-react.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Luisjvg/curso-intro-react/issues"
+  }
 }

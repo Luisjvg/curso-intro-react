@@ -1,30 +1,19 @@
 import React from "react";
-import './TodoList.css' 
+import './TodoList.css';
 
 export function TodoList(props){
     const render = props.render || props.children
-    if(props.sincronize){
-        return (
-            <section className="TodoList-container">
-            {props.loading && props.onLoading()}
-            </section>
-            )
-    }else{
         return(
             <section className="TodoList-container">
-            {props.error && props.onError()}
-            {props.loading && props.onLoading()}
+                {props.error && props.onError()}
+                {props.loading && props.onLoading()}
 
-            {(!props.loading && !props.totalTodos) && props.onEmptyTodos()}
+                {(!props.loading && !props.totalTodos) && props.onEmptyTodos()}
 
-            {(!!props.totalTodos && !props.searchedTodos.length) && props.onEmptySearchResult(props.searchText)}
+                {(!!props.totalTodos && !props.searchedTodos.length) && props.onEmptySearchResult(props.searchText)}
 
-            {props.searchedTodos.map(render)}
-
-            <ul>
-                {props.children}
-            </ul>
-        </section>
+                {(!props.loading && !props.error) && props.searchedTodos.map(render)}
+            </section>
         )
     }
     
@@ -44,4 +33,3 @@ export function TodoList(props){
     //         </ul>
     //     </section>
     // )
-}
